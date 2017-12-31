@@ -26,7 +26,7 @@ public class MyDate {
         return day;
     }
 
-    public void setDay(int day) {
+    public final void setDay(int day) {
         if(day < 1 || day > daysInMonth[month]) {
             day = DEFAULT_DAY_VALUE;
         }
@@ -37,7 +37,7 @@ public class MyDate {
         return month;
     }
 
-    public void setMonth(int month) {
+    public final void setMonth(int month) {
         if(month < 1 || month > 12) {
             month = DEFAULT_MONTH_VALUE;
         }
@@ -48,14 +48,22 @@ public class MyDate {
         return year;
     }
 
-    public void setYear(int year) {
+    public final void setYear(int year) {
         if(year < 1) {
             year = DEFAULT_YEAR_VALUE;
         }
         this.daysInMonth[1] = isLeapYear(year) ? 29 : 28;
         this.year = year;
     }
-
+    
+    /**
+     * Get the number of days in the chosen year and month
+     * @return integer representing the number of days
+     */
+    public int getNumberOfDaysInChosenDate() {
+        return this.daysInMonth[this.month];
+    }
+    
     private boolean isLeapYear(int year) {
         return year % 4 == 0 && !(year % 100 == 0 && year % 400 != 0);
     }
