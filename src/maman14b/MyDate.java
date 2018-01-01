@@ -4,7 +4,7 @@ public class MyDate {
     private final int DEFAULT_DAY_VALUE = 4;
     private final int DEFAULT_MONTH_VALUE = 10;
     private final int DEFAULT_YEAR_VALUE = 1993;
-    private int[] daysInMonth = {31,28,31,30,31,30,31,31,30,31,30,31};
+    private final int[] daysInMonth = {31,28,31,30,31,30,31,31,30,31,30,31};
     
     private int day;
     private int month;
@@ -61,7 +61,7 @@ public class MyDate {
      * @return integer representing the number of days
      */
     public int getNumberOfDaysInChosenDate() {
-        return this.daysInMonth[this.month];
+        return this.daysInMonth[this.month - 1];
     }
     
     private boolean isLeapYear(int year) {

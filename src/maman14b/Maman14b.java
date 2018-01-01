@@ -1,22 +1,18 @@
 package maman14b;
 
-import java.awt.event.ActionListener;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class Maman14b {
 
     public static void main(String[] args) {
-        ComboBoxDateListener listener = new ComboBoxDateListener();
-        MyDate date = new MyDate();
-        ComboBoxDateDay dayComboBox = new ComboBoxDateDay(date, listener);
-        dayComboBox.setComboBoxData();
-        listener.setDayComboBox(dayComboBox);
-        ComboBoxDateMonth monthComboBox = new ComboBoxDateMonth(date, listener);
-        monthComboBox.setComboBoxData();
-        ComboBoxDateYear yearComboBox = new ComboBoxDateYear(date, listener);
-        yearComboBox.setComboBoxData();
-        JPanel panel = new DatePanel(dayComboBox, monthComboBox, yearComboBox);
+        JComboBox day = new JComboBox();
+        JComboBox month = new JComboBox();
+        JComboBox year = new JComboBox();
+        ComboBoxDateController controller = new ComboBoxDateController(day, month, year);
+        controller.setData();
+        JPanel panel = new DatePanel(day, month, year);
         
         JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
