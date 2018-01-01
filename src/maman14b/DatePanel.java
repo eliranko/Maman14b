@@ -46,8 +46,16 @@ public class DatePanel extends JPanel {
         rebuildPanel();
     }
     
+    public MyDate getDate() {
+        return new MyDate((Integer) this.day.getSelectedItem(), 
+                (Integer) this.month.getSelectedItem(),
+                (Integer) this.year.getSelectedItem());
+    }
+    
     /**
-     * Rebuild the panel, assuming some component has changed
+     * Rebuild the panel, assuming some component has changed.
+     * The rebuild operation keeps the good order of: day : month : year
+     * in the panel
      */
     private void rebuildPanel() {
         // Don't rebuild if a component is missing

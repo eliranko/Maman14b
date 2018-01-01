@@ -2,7 +2,6 @@ package maman14b;
 
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 
 public class Maman14b {
 
@@ -12,11 +11,16 @@ public class Maman14b {
         JComboBox year = new JComboBox();
         ComboBoxDateController controller = new ComboBoxDateController(day, month, year);
         controller.setData();
-        JPanel panel = new DatePanel(day, month, year);
+        DatePanel datePanel = new DatePanel(day, month, year);
+        
+        RemindersFileReader fileReader = new RemindersFileReader();
+        ReminderControlPanel reminderPanel = new ReminderControlPanel(datePanel, fileReader);
+        MenuBar menuBar = new MenuBar(fileReader);
         
         JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.add(panel);
+        frame.add(reminderPanel);
+        frame.setJMenuBar(menuBar);
         frame.setSize(300, 300);
         frame.setVisible(true);
     }

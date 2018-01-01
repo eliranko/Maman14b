@@ -1,6 +1,8 @@
 package maman14b;
 
-public class MyDate {
+import java.io.Serializable;
+
+public class MyDate implements Serializable {
     private final int DEFAULT_DAY_VALUE = 4;
     private final int DEFAULT_MONTH_VALUE = 10;
     private final int DEFAULT_YEAR_VALUE = 1993;
@@ -86,6 +88,4 @@ public class MyDate {
         return this.day == other.day && this.month == other.month &&
                 this.year == other.year;
     }
-    
-    
 }
