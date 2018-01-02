@@ -7,6 +7,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.KeyStroke;
 
 public class ReminderMenuBar extends JMenuBar implements ActionListener {
     private final String FILE_MENU_NAME = "File";
@@ -43,6 +44,7 @@ public class ReminderMenuBar extends JMenuBar implements ActionListener {
         this.menuLoadFile.addActionListener(this);
         this.menuSaveFile = new JMenuItem(SAVE_FILE_MENU_ITEM_NAME);
         this.menuSaveFile.addActionListener(this);
+        this.menuSaveFile.setAccelerator(KeyStroke.getKeyStroke("control S"));
         this.menuSaveAs = new JMenuItem(SAVE_AS_MENU_ITEM_NAME);
         this.menuSaveAs.addActionListener(this);
         

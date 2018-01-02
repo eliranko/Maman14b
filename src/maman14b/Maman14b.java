@@ -1,12 +1,24 @@
 package maman14b;
 
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
 
 public class Maman14b {
-    public static void main(String[] args) {
+    
+    private static final int FRAME_HEIGHT = 150;
+    private static final int FRAME_WIDTH = 700;
+    
+    public static void main(String[] args) {       
         RemindersFileReader fileReader = new RemindersFileReader();
-        ReminderFrame frame = new ReminderFrame(getReminderPanel(getDatePanel(), fileReader),
-                getReminderMenu(fileReader));
+        ReminderMenuBar menuBar = getReminderMenu(fileReader);
+        ReminderControlPanel reminderPanel = getReminderPanel(getDatePanel(), fileReader);
+        
+        // Build frame
+        JFrame frame = new JFrame();
+        frame.setSize(FRAME_WIDTH ,FRAME_HEIGHT);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.add(reminderPanel);
+        frame.setJMenuBar(menuBar);
         frame.setVisible(true);
     }
     
