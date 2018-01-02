@@ -10,7 +10,6 @@ import javax.swing.JTextField;
 public class ReminderControlPanel extends JPanel implements ActionListener {
     private final String SAVE_REMINDER_BUTTON_TEXT = "Save reminder";
     private final String FETCH_REMINDER_BUTTON_TEXT = "Fetch reminder";
-    private final String LOAD_FILE_ERROR_TEXT = "Please load a file";
     private final String EMPTY_REMINDER = "-EMPTY-";
     private final int REMINDER_TEXT_FIELD_COLUMNS = 20;
     
@@ -92,9 +91,7 @@ public class ReminderControlPanel extends JPanel implements ActionListener {
     }
     
     private void handleSaveClicked() {
-        if(!this.fileReader.addReminder(this.datePanel.getDate(), this.reminderTextField.getText())) {
-            JOptionPane.showMessageDialog(this, LOAD_FILE_ERROR_TEXT);
-        }
+        this.fileReader.addReminder(this.datePanel.getDate(), this.reminderTextField.getText());
 
         this.reminderTextField.setText("");
     }
@@ -107,9 +104,7 @@ public class ReminderControlPanel extends JPanel implements ActionListener {
         // The user canceled
         if(input == null) return;
 
-        if(!this.fileReader.addReminder(this.datePanel.getDate(), input)) {
-            JOptionPane.showMessageDialog(this, LOAD_FILE_ERROR_TEXT);
-        }
+        this.fileReader.addReminder(this.datePanel.getDate(), input);
     }
     
     private String getCurrentReminder() {
