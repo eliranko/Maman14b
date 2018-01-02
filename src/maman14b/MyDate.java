@@ -12,22 +12,39 @@ public class MyDate implements Serializable {
     private int month;
     private int year;
 
+    /**
+     * Constructor
+     * @param day integer day
+     * @param month integer month
+     * @param year integer year
+     */
     public MyDate(int day, int month, int year) {
         setDay(day);
         setMonth(month);
         setYear(year);
     }
 
+    /**
+     * Empty constructor
+     */
     public MyDate() {
         setDay(DEFAULT_DAY_VALUE);
         setMonth(DEFAULT_MONTH_VALUE);
         setYear(DEFAULT_YEAR_VALUE);
     }
 
+    /**
+     * Get the day
+     * @return integer day
+     */
     public int getDay() {
         return day;
     }
 
+    /**
+     * Set the day
+     * @param day Integer day
+     */
     public final void setDay(int day) {
         if(day < 1 || day > daysInMonth[month]) {
             day = DEFAULT_DAY_VALUE;
@@ -35,10 +52,18 @@ public class MyDate implements Serializable {
         this.day = day;
     }
 
+    /**
+     * Get the month
+     * @return integer month
+     */
     public int getMonth() {
         return month;
     }
 
+    /**
+     * Set the month
+     * @param month integer month
+     */
     public final void setMonth(int month) {
         if(month < 1 || month > 12) {
             month = DEFAULT_MONTH_VALUE;
@@ -46,10 +71,18 @@ public class MyDate implements Serializable {
         this.month = month;
     }
 
+    /**
+     * Get the year
+     * @return integer year
+     */
     public int getYear() {
         return year;
     }
 
+    /**
+     * Set the year
+     * @param year integer year
+     */
     public final void setYear(int year) {
         if(year < 1) {
             year = DEFAULT_YEAR_VALUE;

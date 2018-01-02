@@ -8,7 +8,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
-public class MenuBar extends JMenuBar implements ActionListener {
+public class ReminderMenuBar extends JMenuBar implements ActionListener {
     private final String FILE_MENU_NAME = "File";
     private final String LOAD_FILE_MENU_ITEM_NAME = "Load";
     private final String SAVE_FILE_MENU_ITEM_NAME = "Save";
@@ -23,18 +23,26 @@ public class MenuBar extends JMenuBar implements ActionListener {
     private RemindersFileReader fileReader;
     private boolean fileLoaded;
 
-    public MenuBar(RemindersFileReader fileReader) {
+    /**
+     * Constructor
+     * @param fileReader RemindersFileReader
+     */
+    public ReminderMenuBar(RemindersFileReader fileReader) {
         this();
         this.fileReader = fileReader;
     }    
     
-    public MenuBar() {
+    /**
+     * Empty constructor
+     */
+    public ReminderMenuBar() {
         this.fileLoaded = false;
         this.fileChooser = new JFileChooser();
         this.menuFile = new JMenu(FILE_MENU_NAME);
         this.menuLoadFile = new JMenuItem(LOAD_FILE_MENU_ITEM_NAME);
         this.menuLoadFile.addActionListener(this);
         this.menuSaveFile = new JMenuItem(SAVE_FILE_MENU_ITEM_NAME);
+        this.menuSaveFile.addActionListener(this);
         this.menuSaveAs = new JMenuItem(SAVE_AS_MENU_ITEM_NAME);
         this.menuSaveAs.addActionListener(this);
         
@@ -44,10 +52,18 @@ public class MenuBar extends JMenuBar implements ActionListener {
         add(this.menuFile);
     }
 
+    /**
+     * Get file reader
+     * @return RemindersFileReader
+     */
     public RemindersFileReader getFileReader() {
         return fileReader;
     }
 
+    /**
+     * Set file reader
+     * @param fileReader RemindersFileReader
+     */
     public void setFileReader(RemindersFileReader fileReader) {
         this.fileReader = fileReader;
     }
@@ -55,12 +71,14 @@ public class MenuBar extends JMenuBar implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         Object source = e.getSource();
+        // User asked to load a file
         if(source == this.menuLoadFile) {
             this.fileLoaded = true;
             if(this.fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
                 this.fileReader.loadFile(fileChooser.getSelectedFile());
             }
         }
+        // User asked to save to the loaded file
         else if(source == this.menuSaveFile) {
             if(!this.fileLoaded) {
                 JOptionPane.showMessageDialog(this, FILE_NOT_LOADED);
@@ -69,6 +87,7 @@ public class MenuBar extends JMenuBar implements ActionListener {
                 this.fileReader.save();
             }
         }
+        // User asked to save the reminders in a new file
         else if(source == this.menuSaveAs) {
             this.fileLoaded = true;
             if(this.fileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {

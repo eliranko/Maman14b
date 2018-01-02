@@ -7,13 +7,13 @@ import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
 public class ComboBoxDateController implements ActionListener {
-    // day const
+    // day consts
     private final int DEFAULT_DAY_VALUE = 1;
-    // month const
+    // month consts
     private final int MIN_MONTH_VALUE = 1;
     private final int MAX_MONTH_VALUE = 12;
     private final int DEFAULT_MONTH_VALUE = 1;
-    // year const
+    // year consts
     private final int MIN_YEAR_VALUE = 1990;
     private final int MAX_YEAR_VALUE = 2050;
     private final int DEFAULT_YEAR_VALUE = 1993;
@@ -23,39 +23,72 @@ public class ComboBoxDateController implements ActionListener {
     private JComboBox<Integer> year;
     private MyDate date;
 
+    /**
+     * Constructor
+     * @param day Day combo box
+     * @param month Month combo box
+     * @param year Year combo box
+     */
     public ComboBoxDateController(JComboBox day, JComboBox month, JComboBox year) {
         this();
         setDay(day);
         setMonth(month);
         setYear(year);
     }
-
+ 
+    /**
+     * Empty constructor
+     */
     public ComboBoxDateController() {
         this.date = new MyDate();
     }
 
+    /**
+     * Get day combo box
+     * @return JComboBox
+     */
     public JComboBox getDay() {
         return day;
     }
 
+    /**
+     * Set day combo box
+     * @param day Combo box of day
+     */
     public final void setDay(JComboBox day) {
         this.day = day;
         this.day.addActionListener(this);
     }
 
+    /**
+     * Get month combo box
+     * @return JComboBox
+     */
     public JComboBox getMonth() {
         return month;
     }
 
+    /**
+     * Set month combo box
+     * @param month Combo box of month
+     */
     public final void setMonth(JComboBox month) {
         this.month = month;
         this.month.addActionListener(this);
     }
 
+    /**
+     * Get year combo box
+     * @return JComboBox
+     */
     public JComboBox getYear() {
         return year;
     }
 
+    /**
+     * Set year combo box
+     * @param year Combo box of year
+     */
     public final void setYear(JComboBox year) {
         this.year = year;
         this.year.addActionListener(this);
@@ -75,27 +108,35 @@ public class ComboBoxDateController implements ActionListener {
         setChosenDay(DEFAULT_DAY_VALUE);
     }
     
+    
     private void setAvailableDaysData() {
         // Set available days in the combo box
         Integer[] days = new Integer[this.date.getNumberOfDaysInChosenDate()];
         for(int i = 1; i <= days.length; i++) {
             days[i - 1] = i;
         }
-        this.day.setModel(new DefaultComboBoxModel(days));
+        this.day.setModel(new DefaultComboBoxModel(days)); // set the model in the combo box
     }
     
     private void updateAvailableDaysData() {
-        int currentDay = this.day == null ? (Integer) this.day.getSelectedItem() : DEFAULT_DAY_VALUE;
+        // Get the chosen day
+        int chosenDay;
+        try {
+            chosenDay = this.day != null ? (Integer) this.day.getSelectedItem() : DEFAULT_DAY_VALUE;
+        }
+        catch(Exception e) { // The day data hasn't been set
+            chosenDay = DEFAULT_DAY_VALUE;
+        }
+        // Update the available days data in the combo box
         setAvailableDaysData();
         
-        // The day is invalid after the changes that were made
-        if(currentDay > this.date.getNumberOfDaysInChosenDate()) {
-            setChosenDay(DEFAULT_DAY_VALUE);
+        if(chosenDay > this.date.getNumberOfDaysInChosenDate()) { // The day is invalid after the changes that were made
+            setChosenDay(DEFAULT_DAY_VALUE); // Set default day
             JOptionPane.showMessageDialog(null, "The chosen day was invalid after "
                     + "the changed! Set to default value");
         }
         else {
-            setChosenDay(currentDay);
+            setChosenDay(chosenDay); // Set the chosen day after the change
         }
     }
     
@@ -111,13 +152,14 @@ public class ComboBoxDateController implements ActionListener {
         for(int i = 0; i < months.length; i++) {
             months[i] = i + MIN_MONTH_VALUE;
         }
-        this.month.setModel(new DefaultComboBoxModel(months));
+        this.month.setModel(new DefaultComboBoxModel(months)); // set the model in the combo box
     }
     
     private void setChosenMonth(int month) {
         this.month.setSelectedItem(month);
         // Set the date object
         this.date.setMonth((Integer) this.month.getSelectedItem());
+        // Update the day combo box after the change
         updateAvailableDaysData();
     }
     
@@ -127,13 +169,14 @@ public class ComboBoxDateController implements ActionListener {
         for(int i = 0; i < years.length; i++) {
             years[i] = i + MIN_YEAR_VALUE;
         }
-        this.year.setModel(new DefaultComboBoxModel(years));
+        this.year.setModel(new DefaultComboBoxModel(years)); // set the model in the combo box
     }
     
     private void setChosenYear(int year) {
         this.year.setSelectedItem(year);        
         // Set the date object
         this.date.setYear((Integer) this.year.getSelectedItem());
+        // Update the day combo box after the change
         updateAvailableDaysData();
     }
     
@@ -148,13 +191,13 @@ public class ComboBoxDateController implements ActionListener {
         if(!(source instanceof JComboBox)) return;
         
         JComboBox info = (JComboBox) source;
-        if(info == day) {
+        if(info == this.day) { // A day was changed
             setChosenDay((Integer) info.getSelectedItem());
         }
-        else if(info == month) {
+        else if(info == this.month) { // A month was changed
             setChosenMonth((Integer) info.getSelectedItem());
         }
-        else {
+        else if(info == this.year) { // A year was changed
             setChosenYear((Integer) info.getSelectedItem());
         }
     }

@@ -2,6 +2,7 @@ package maman14b;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -19,17 +20,29 @@ public class ReminderControlPanel extends JPanel implements ActionListener {
     private JButton fetchReminerButton;
     private RemindersFileReader fileReader;
 
+    /**
+     * Constructor
+     * @param datePanel Date panel
+     * @param fileReader File reader
+     */
     public ReminderControlPanel(DatePanel datePanel, RemindersFileReader fileReader) {
         this(datePanel);
         this.fileReader = fileReader;
     }
     
+    /**
+     * Constructor
+     * @param datePanel Date panel
+     */
     public ReminderControlPanel(DatePanel datePanel) {
         this();
         this.datePanel = datePanel;
         rebuildPanel();
     }
 
+    /**
+     * Empty constructor
+     */
     public ReminderControlPanel() {
         this.reminderTextField = new JTextField("", REMINDER_TEXT_FIELD_COLUMNS);
         this.reminderTextField.addActionListener(this);
@@ -43,19 +56,35 @@ public class ReminderControlPanel extends JPanel implements ActionListener {
         rebuildPanel();
     }
 
+    /**
+     * Get date panel
+     * @return Date panel
+     */
     public DatePanel getDatePanel() {
         return datePanel;
     }
 
+    /**
+     * Set date panel
+     * @param datePanel DatePanel
+     */
     public void setDatePanel(DatePanel datePanel) {
         this.datePanel = datePanel;
         rebuildPanel();
     }
 
+    /**
+     * Get file reader
+     * @return RemindersFileReader
+     */
     public RemindersFileReader getFileReader() {
         return fileReader;
     }
 
+    /**
+     * Set file reader
+     * @param fileReader RemindersFileReader
+     */
     public void setFileReader(RemindersFileReader fileReader) {
         this.fileReader = fileReader;
     }
@@ -82,9 +111,11 @@ public class ReminderControlPanel extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         Object source = e.getSource();
+        // User asked to save a reminder
         if(source == this.saveReminderButton) {
             handleSaveClicked();
         }
+        // User asked to fetch the reminder
         else if(source == this.fetchReminerButton) {
             handleFetchClicked();
         }
@@ -92,13 +123,12 @@ public class ReminderControlPanel extends JPanel implements ActionListener {
     
     private void handleSaveClicked() {
         this.fileReader.addReminder(this.datePanel.getDate(), this.reminderTextField.getText());
-
         this.reminderTextField.setText("");
     }
     
     private void handleFetchClicked() {
         String input = JOptionPane.showInputDialog("The reminder is: " +
-                getCurrentReminder() + 
+                getCurrentDateReminder() + 
                 "\nWould you like to change it?");
 
         // The user canceled
@@ -107,7 +137,7 @@ public class ReminderControlPanel extends JPanel implements ActionListener {
         this.fileReader.addReminder(this.datePanel.getDate(), input);
     }
     
-    private String getCurrentReminder() {
+    private String getCurrentDateReminder() {
         String reminder = this.fileReader.getReminder(this.datePanel.getDate());
         return reminder != null && !reminder.equals("") ? reminder : EMPTY_REMINDER;
     }
